@@ -1,33 +1,67 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import requests
+
+request=requests.get('http://api.open-notify.org/astros.json')
+print(request.status_code)
+print(request.text)
+
+
 
 loan_data = pd.read_csv("lending_club_loan_two.csv")  #importing libraries and CSV#
-#print(loan_data.iloc[:3])
+credit_grade = np.unique(loan_data['grade'])
+sum_of_credit_grade = np.unique(loan_data['grade'])
+grade_loan_array = []
+sum_loan_array = []
+multiply_array = []
 
-initial_value = np.sum(loan_data['loan_amnt'])
-balance = np.array(loan_data['loan_amnt'])
-
-print (initial_value)
 
 def Print_Grade_Balances( Grade_balances ):#function created to print out grade balances.
     for element in Grade_balances:
         balance = loan_data.groupby('grade')['loan_amnt'].sum()[element] #grouping the data frame for grade and summing the balance as long as its equal to the current element,
-        print("Credit Grade ", element, "has an exposure of", balance)
+        print("Loans in Credit Grade", element, "have a raw exposure of", balance)
+
+
+for element in credit_grade:#loop to calculate the average Interest per Credit Grade
+    interest_Calc = round(loan_data.groupby('grade')['int_rate'].mean()[element], 2)
+    print("The Average Credit Grade", element, "interest rate is", interest_Calc)
+    grade_loan_array.append(interest_Calc)
+
+for element in credit_grade:
+    balance = loan_data.groupby('grade')['loan_amnt'].sum()[element] #grouping the data frame for grade and summing the balance as long as its equal to the current element,
+    sum_loan_array.append(balance)
+
+sum_loan_array = np.divide(sum_loan_array, 10000)# Figure here divided by 10000 to quantify data in the millions (data set values were in the billions.
+multiply_array = np.multiply(grade_loan_array, sum_loan_array) #multiply the loan grade interest rate by the sum of loans per grade
+multiply_array = np.divide(multiply_array, 100)#divide by 100 to get the correct average interest paid.
+
+
+print(multiply_array)
+print(grade_loan_array)
+print(sum_loan_array)
+
+
+Print_Grade_Balances( credit_grade) #function call
+
+barWidth = 0.25
+fig = plt.subplots(figsize=(20, 20))
+
+# Set position of bar on X axis
+br1 = np.arange(len(multiply_array))
+br2 = [x + barWidth for x in br1]
+
+# Make the plot
+plt.bar(br1, multiply_array, color='r', width=barWidth,
+        edgecolor='grey', label='Interest Paid')
+plt.bar(br2, sum_loan_array, color='g', width=barWidth,
+        edgecolor='grey', label='Loan Amount')
+
+
+plt.xlabel('Credit Grade', fontweight='bold', fontsize=15)
+plt.ylabel('€ in Millions', fontweight='bold', fontsize=15)
+plt.legend()
+plt.show()
 
 
 
-
-
-credit_grade = np.unique(loan_data['grade'])
-Print_Grade_Balances( credit_grade)
-
-#def dosomething( thelist ):
- #   for element in thelist:
-  #      print element
-
-
-
-#sum_of_credit_grade = np.unique(loan_data['grade'])#Getting unique Credit Grade Values from CSV. Using this to loop through all loans with a specific credit grade
-#credit_grade = np.unique(loan_data['grade']) #Getting unique Credit Grade Values - this variable will be used in the pie chart. Needed two of the same variables are the above variable gets overwritten.
-#loan_ave = round(loan_data ['grade'].value_counts()/loan_data['grade'].count()*100, 2) # gives me the % of what grades the loans are in and sorts largest to smallest
