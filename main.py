@@ -31,37 +31,17 @@ with np.nditer(sum_of_credit_grade, op_flags=["readwrite"], flags=["refs_ok"]) a
 #print(test4)
 #print(test5)
 #print(test6)
+#credit_check = np.sum(loan_data['loan_amnt'])
+#print(credit_check)
 
-
-credit_check = np.sum(loan_data['loan_amnt'])
-print(credit_check)
 print (loan_ave)
-
-
+expl = (0.0, 0.0, 0.0, 0.05, 0.1, 0.2, 0.3)
 
 fig, (ax,ax1) = plt.subplots(1,2,figsize=(15,15))
-ax.pie(loan_ave, labels=credit_grade, autopct='%1.1f%%')
-ax.set_title('% Exposure by Credit Rating', bbox={'facecolor':'0.8', 'pad':5})
+ax.pie(loan_ave,startangle = 45,shadow = True, explode = expl, labels=credit_grade, autopct='%1.1f%%')
+ax.set_title('% of loan Exposure by Credit Rating', bbox={'facecolor':'0.6', 'pad':3})
 
-ax1.pie(loan_ave, labels=sum_of_credit_grade, autopct='%1.1f%%')
-ax1.set_title('Value per rating', bbox={'facecolor':'0.8', 'pad':5})
+ax1.pie(loan_ave, startangle= 45,explode = expl,shadow =True, labels=sum_of_credit_grade, autopct='%1.1f%%')
+ax1.set_title('Value of loan by Credit Rating', bbox={'facecolor':'0.6', 'pad':5})
 plt.show()
 
-
-
-#This code is testing code.
-#print(loan_data)
-#print(loan_data.head())
-#print(loan_data.shape)
-
-#missing_values_count = loan_data.isnull().sum()
-#print(missing_values_count)
-
-
-#x = loan_data['term'].head(15)
-#y1 = loan_data['loan_amnt'].head(15)
-#y2 = loan_data[''].head(15)
-
-#ax.plot(x,y1)
-#ax.bar(x,y2)
-#ax.scatter(x,y1)
