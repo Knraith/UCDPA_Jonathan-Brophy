@@ -34,11 +34,11 @@ with np.nditer(sum_of_credit_grade, op_flags=["readwrite"], flags=["refs_ok"]) a
 #credit_check = np.sum(loan_data['loan_amnt'])
 #print(credit_check)
 
-print (loan_ave)
+
 expl = (0.0, 0.0, 0.0, 0.05, 0.1, 0.2, 0.3)
 
 fig, (ax,ax1) = plt.subplots(1,2,figsize=(15,15))
-ax.pie(loan_ave,startangle = 45,shadow = True, explode = expl, labels=credit_grade, autopct='%1.1f%%')
+ax.pie(loan_ave,shadow = True, explode = expl, labels=credit_grade, autopct='%1.1f%%')
 ax.set_title('% of loan Exposure by Credit Rating', bbox={'facecolor':'0.6', 'pad':3})
 
 ax1.pie(loan_ave, startangle= 45,explode = expl,shadow =True, labels=sum_of_credit_grade, autopct='%1.1f%%')
