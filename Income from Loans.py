@@ -59,7 +59,7 @@ plt.bar(br2, sum_loan_array, color='g', width=barWidth,
 
 
 plt.xlabel('Credit Grade', fontweight='bold', fontsize=15)
-plt.ylabel('€ in Millions', fontweight='bold', fontsize=15)
+plt.ylabel('€ in Thousands', fontweight='bold', fontsize=15)
 plt.legend()
 plt.show()
 
