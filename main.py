@@ -10,6 +10,7 @@ sum_of_credit_grade = np.unique(loan_data['grade'])#Getting unique Credit Grade 
 credit_grade = np.unique(loan_data['grade']) #Getting unique Credit Grade Values - this variable will be used in the pie chart. Needed two of the same variables are the above variable gets overwritten.
 loan_ave = round(loan_data ['grade'].value_counts()/loan_data['grade'].count()*100, 2) # gives me the % of what grades the loans are in and sorts largest to smallest
 
+
 with np.nditer(sum_of_credit_grade, op_flags=["readwrite"], flags=["refs_ok"]) as it: # Setup a loop to allow array values to be overwritten
    for x in it: # Loop cycle
             x[...] = loan_data.loc[loan_data['grade'] == x[...],'loan_amnt'].sum() # Takes the value  for each loan grade and gets the Sum value of each credit Grade
@@ -17,7 +18,7 @@ with np.nditer(sum_of_credit_grade, op_flags=["readwrite"], flags=["refs_ok"]) a
 
 # For loop replaces all the below code.
 #test = loan_data.loc[loan_data['grade'] == 'A','loan_amnt'].sum()
-#test1 = loan_data.loc[loan_data['grade'] == 'B','loan_amnt'].sum()
+##test1 = loan_data.loc[loan_data['grade'] == 'B','loan_amnt'].sum()
 #test2 = loan_data.loc[loan_data['grade'] == 'C','loan_amnt'].sum()
 #test3 = loan_data.loc[loan_data['grade'] == 'D','loan_amnt'].sum()
 #test4 = loan_data.loc[loan_data['grade'] == 'E','loan_amnt'].sum()
@@ -33,8 +34,7 @@ with np.nditer(sum_of_credit_grade, op_flags=["readwrite"], flags=["refs_ok"]) a
 
 
 credit_check = np.sum(loan_data['loan_amnt'])
-#print(credit_check)
-#print(check)
+print(credit_check)
 print (loan_ave)
 
 
